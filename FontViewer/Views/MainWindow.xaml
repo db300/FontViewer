@@ -1,0 +1,28 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:FontViewer.ViewModels;assembly=FontViewer"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="FontViewer.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="FontViewer">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+  <DockPanel LastChildFill="True">
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="File">
+        <MenuItem Header="Open..." Command="{Binding OpenCommand}"/>
+        <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+      </MenuItem>
+      <MenuItem Header="Help">
+        <MenuItem Header="About"/>
+      </MenuItem>
+    </Menu>
+    <StackPanel></StackPanel>
+  </DockPanel>
+
+</Window>
