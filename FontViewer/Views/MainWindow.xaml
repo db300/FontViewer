@@ -13,16 +13,13 @@
     </Design.DataContext>
 
   <DockPanel LastChildFill="True">
-    <Menu DockPanel.Dock="Top">
-      <MenuItem Header="File">
-        <MenuItem Header="Open..." Command="{Binding OpenCommand}"/>
-        <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
-      </MenuItem>
-      <MenuItem Header="Help">
-        <MenuItem Header="About"/>
-      </MenuItem>
-    </Menu>
-    <StackPanel></StackPanel>
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="CadetBlue">
+      <Button Content="打开" Command="{Binding OpenCommand}"/>
+    </StackPanel>
+    <DockPanel>
+      <TreeView Items="{Binding Items}" DockPanel.Dock="Left" Background="Aqua" Width="250"/>
+      <StackPanel Background="Beige"></StackPanel>
+    </DockPanel>
   </DockPanel>
 
 </Window>
