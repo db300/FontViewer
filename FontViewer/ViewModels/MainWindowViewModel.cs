@@ -20,7 +20,6 @@ namespace FontViewer.ViewModels
         public MainWindowViewModel()
         {
             Items = _root.Children;
-            FontName = "test";
         }
 
         #endregion
