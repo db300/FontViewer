@@ -5,7 +5,6 @@
     <Authors>DavidHawkes</Authors>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Compile Update="**\*.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
@@ -24,6 +23,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Users\db300\Documents\GitHub\GlyphLoader\src\WaterTrans.GlyphLoader\WaterTrans.GlyphLoader.csproj" />
+    <ProjectReference Include="..\..\GlyphLoader\src\WaterTrans.GlyphLoader\WaterTrans.GlyphLoader.csproj" />
   </ItemGroup>
 </Project>

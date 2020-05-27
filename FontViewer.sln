@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FontViewer", "FontViewer\FontViewer.csproj", "{602DCD39-7C31-4E76-BCA7-05B3E20FBCFF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaterTrans.GlyphLoader", "..\..\Users\db300\Documents\GitHub\GlyphLoader\src\WaterTrans.GlyphLoader\WaterTrans.GlyphLoader.csproj", "{6C5933B2-50C4-4E3D-A20F-6C213340B033}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaterTrans.GlyphLoader", "..\GlyphLoader\src\WaterTrans.GlyphLoader\WaterTrans.GlyphLoader.csproj", "{6C5933B2-50C4-4E3D-A20F-6C213340B033}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

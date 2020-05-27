@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Reactive;
 using System.Text;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using FontViewer.Models;
 using ReactiveUI;
 
 namespace FontViewer.ViewModels
@@ -16,13 +19,45 @@ namespace FontViewer.ViewModels
 
         public MainWindowViewModel()
         {
+            Items = _root.Children;
+            FontName = "test";
         }
 
         #endregion
 
         #region property
 
+        public ObservableCollection<FontItem> Items { get; set; }
 
+        public FontItem SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                var typeface = _selectedItem?.Typeface;
+                FontName = typeface == null ? "" : string.Join("\r\n", typeface.NAMEFeatures.Select(item => item.Value));
+                System.Diagnostics.Debug.WriteLine(FontName);
+            }
+        }
+
+        public string FontName
+        {
+            get => _fontName;
+            set => this.RaiseAndSetIfChanged(ref _fontName, value);
+        }
+
+        private string _fontName;
+
+        private FontItem _selectedItem;
+
+        private readonly Node _root = new Node();
+
+        private class Node
+        {
+            public ObservableCollection<FontItem> Children { get; } = new ObservableCollection<FontItem>();
+            public void AddNewItem(FontItem fontItem) => Children.Add(fontItem);
+        }
 
         #endregion
 
@@ -43,12 +78,11 @@ namespace FontViewer.ViewModels
             };
             var result = await openDlg.ShowAsync((Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow);
             if (!(result?.Length > 0)) return;
-            System.Diagnostics.Debug.WriteLine(result);
             foreach (var fileName in result)
             {
                 await using var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
                 var typeface = new WaterTrans.GlyphLoader.Typeface(fs);
-                System.Diagnostics.Debug.WriteLine(typeface);
+                _root.AddNewItem(new FontItem {FileName = fileName, Typeface = typeface});
             }
         });
 

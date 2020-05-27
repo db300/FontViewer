@@ -17,8 +17,14 @@
       <Button Content="打开" Command="{Binding OpenCommand}"/>
     </StackPanel>
     <DockPanel>
-      <TreeView Items="{Binding Items}" DockPanel.Dock="Left" Background="Aqua" Width="250"/>
-      <StackPanel Background="Beige"></StackPanel>
+      <TreeView Items="{Binding Items}" SelectedItem="{Binding SelectedItem}" SelectedItems="{Binding SelectedItems}" DockPanel.Dock="Left" Background="Aqua" Width="250">
+        <TreeView.ItemTemplate>
+          <TreeDataTemplate ItemsSource="{Binding Children}">
+            <TextBlock Text="{Binding FileName}"/>
+          </TreeDataTemplate>
+        </TreeView.ItemTemplate>
+      </TreeView>
+      <TextBox Background="Beige" Text="{Binding FontName}"/>
     </DockPanel>
   </DockPanel>
 
