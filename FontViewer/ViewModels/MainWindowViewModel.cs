@@ -37,7 +37,6 @@ namespace FontViewer.ViewModels
                 _selectedItem = value;
                 var typeface = _selectedItem?.Typeface;
                 FontName = typeface == null ? "" : string.Join("\r\n", typeface.NAMEFeatures.Select(item => item.Value));
-                System.Diagnostics.Debug.WriteLine(FontName);
             }
         }
 
