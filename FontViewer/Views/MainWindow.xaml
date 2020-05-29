@@ -6,25 +6,25 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="FontViewer.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="FontViewer">
+        Title="FontViewer" FontFamily="苹方-简">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
   <DockPanel LastChildFill="True">
-    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="CadetBlue">
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
       <Button Content="打开" Command="{Binding OpenCommand}"/>
     </StackPanel>
     <DockPanel>
-      <TreeView Items="{Binding Items}" SelectedItem="{Binding SelectedItem}" SelectedItems="{Binding SelectedItems}" DockPanel.Dock="Left" Background="Aqua" Width="250">
+      <TreeView Items="{Binding Items}" SelectedItem="{Binding SelectedItem}" SelectedItems="{Binding SelectedItems}" DockPanel.Dock="Left" Width="250">
         <TreeView.ItemTemplate>
           <TreeDataTemplate ItemsSource="{Binding Children}">
             <TextBlock Text="{Binding FileName}"/>
           </TreeDataTemplate>
         </TreeView.ItemTemplate>
       </TreeView>
-      <TextBox Background="Beige" Text="{Binding FontName}"/>
+      <TextBox Text="{Binding FontName}"/>
     </DockPanel>
   </DockPanel>
 
