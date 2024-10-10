@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30104.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FontViewer", "FontViewer\FontViewer.csproj", "{602DCD39-7C31-4E76-BCA7-05B3E20FBCFF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaterTrans.GlyphLoader", "..\GlyphLoader\src\WaterTrans.GlyphLoader\WaterTrans.GlyphLoader.csproj", "{6C5933B2-50C4-4E3D-A20F-6C213340B033}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FontViewer.Obsolete", "FontViewer.obsolete\FontViewer.Obsolete.csproj", "{EE4A3A82-8187-4EED-B1C1-6C0157C0CDA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FontViewer", "FontViewer\FontViewer.csproj", "{501D3FDB-CF36-4374-8A4C-660E7EFE5640}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{602DCD39-7C31-4E76-BCA7-05B3E20FBCFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{602DCD39-7C31-4E76-BCA7-05B3E20FBCFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{602DCD39-7C31-4E76-BCA7-05B3E20FBCFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{602DCD39-7C31-4E76-BCA7-05B3E20FBCFF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C5933B2-50C4-4E3D-A20F-6C213340B033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C5933B2-50C4-4E3D-A20F-6C213340B033}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C5933B2-50C4-4E3D-A20F-6C213340B033}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C5933B2-50C4-4E3D-A20F-6C213340B033}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE4A3A82-8187-4EED-B1C1-6C0157C0CDA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE4A3A82-8187-4EED-B1C1-6C0157C0CDA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE4A3A82-8187-4EED-B1C1-6C0157C0CDA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE4A3A82-8187-4EED-B1C1-6C0157C0CDA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{501D3FDB-CF36-4374-8A4C-660E7EFE5640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{501D3FDB-CF36-4374-8A4C-660E7EFE5640}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{501D3FDB-CF36-4374-8A4C-660E7EFE5640}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{501D3FDB-CF36-4374-8A4C-660E7EFE5640}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

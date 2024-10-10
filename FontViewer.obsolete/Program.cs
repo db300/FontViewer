@@ -1,15 +1,16 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Logging.Serilog;
 using Avalonia.ReactiveUI;
-using System;
 
 namespace FontViewer
 {
-    internal sealed class Program
+    class Program
     {
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
-        [STAThread]
         public static void Main(string[] args) => BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
 
@@ -17,8 +18,7 @@ namespace FontViewer
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .WithInterFont()
-                .LogToTrace()
+                .LogToDebug()
                 .UseReactiveUI();
     }
 }
