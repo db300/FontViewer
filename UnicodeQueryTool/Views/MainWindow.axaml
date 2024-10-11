@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:UnicodeQueryTool.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="300"
+        x:Class="UnicodeQueryTool.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Unicode速查工具"
+        Width="600"
+        Height="300"
+        WindowStartupLocation="CenterScreen">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    
+    <TextBox Text="{Binding InputText}" Grid.Column="0" Margin="10" Watermark="输入文本" AcceptsReturn="True"/>
+    
+    <StackPanel Grid.Column="1" Margin="10" VerticalAlignment="Center">
+      <Button Content="转成Unicode -&gt;" Command="{Binding ConvertToUnicodeCommand}" Width="150" Margin="0,0,0,10" HorizontalContentAlignment="Center"/>
+      <Button Content="&lt;- 转成文本" Command="{Binding ConvertToTextCommand}" Width="150" HorizontalContentAlignment="Center"/>
+    </StackPanel>
+
+    <TextBox Text="{Binding InputUnicode}" Grid.Column="2" Margin="10" Watermark="输入Unicode" AcceptsReturn="True"/>
+
+  </Grid>
+
+
+</Window>
