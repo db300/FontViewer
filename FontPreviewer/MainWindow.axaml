@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="FontPreviewer.MainWindow"
+        Title="FontPreviewer">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <Button Grid.Row="0" Content="打开" Click="OpenCommandClick"/>
+    <TextBox Grid.Row="1" HorizontalAlignment="Stretch" x:Name="InputTextBox" KeyDown="InputTextBox_KeyDown"/>
+
+    <Grid Grid.Row="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+
+      <Canvas Grid.Column="0" x:Name="GlyphPreviewCanvas" SizeChanged="GlyphPreviewCanvas_SizeChanged" PointerWheelChanged="GlyphPreviewCanvas_PointerWheelChanged"/>
+      <StackPanel Grid.Column="1" Orientation="Vertical" Background="AliceBlue">
+        <CheckBox Content="yMin / yMax" Foreground="Black" x:Name="YMinMaxVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
+        <CheckBox Content="hhea ascender / descender" Foreground="Red" x:Name="HheaAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
+        <CheckBox Content="typo ascender / descender" Foreground="Lime" x:Name="TypoAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
+        <CheckBox Content="win ascender / descender" Foreground="Blue" x:Name="WinAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
+      </StackPanel>
+      
+    </Grid>
+    
+    <TextBlock Grid.Row="3" Height="200" x:Name="InfoBlock" Background="AliceBlue"/>
+  </Grid>
+</Window>

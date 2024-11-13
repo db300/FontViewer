@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaterTrans.GlyphLoader", "..\GlyphLoader\src\WaterTrans.GlyphLoader\WaterTrans.GlyphLoader.csproj", "{6C5933B2-50C4-4E3D-A20F-6C213340B033}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FontViewer.Obsolete", "FontViewer.obsolete\FontViewer.Obsolete.csproj", "{EE4A3A82-8187-4EED-B1C1-6C0157C0CDA4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FontViewer", "FontViewer\FontViewer.csproj", "{501D3FDB-CF36-4374-8A4C-660E7EFE5640}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnicodeQueryTool", "UnicodeQueryTool\UnicodeQueryTool.csproj", "{F9619476-06C3-400B-9550-F79AB5245CC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnicodeQueryTool", "UnicodeQueryTool\UnicodeQueryTool.csproj", "{F9619476-06C3-400B-9550-F79AB5245CC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FontPreviewer", "FontPreviewer\FontPreviewer.csproj", "{BFC38070-C04E-4B08-83B7-B70E30F8F227}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHawkAvaloniaCommonLibrary", "..\iHawkAvaloniaLibrary\iHawkAvaloniaCommonLibrary\iHawkAvaloniaCommonLibrary.csproj", "{7C429C5F-CF84-4CAA-88B1-A70A53FB014C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHawkSkiaSharpCommonLibrary", "..\iHawkAvaloniaLibrary\iHawkSkiaSharpCommonLibrary\iHawkSkiaSharpCommonLibrary.csproj", "{7D4AE9FD-C828-4822-AF2F-C7F0C8761C4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6C5933B2-50C4-4E3D-A20F-6C213340B033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C5933B2-50C4-4E3D-A20F-6C213340B033}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C5933B2-50C4-4E3D-A20F-6C213340B033}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C5933B2-50C4-4E3D-A20F-6C213340B033}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EE4A3A82-8187-4EED-B1C1-6C0157C0CDA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE4A3A82-8187-4EED-B1C1-6C0157C0CDA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EE4A3A82-8187-4EED-B1C1-6C0157C0CDA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EE4A3A82-8187-4EED-B1C1-6C0157C0CDA4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{501D3FDB-CF36-4374-8A4C-660E7EFE5640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{501D3FDB-CF36-4374-8A4C-660E7EFE5640}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{501D3FDB-CF36-4374-8A4C-660E7EFE5640}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +27,18 @@ Global
 		{F9619476-06C3-400B-9550-F79AB5245CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9619476-06C3-400B-9550-F79AB5245CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9619476-06C3-400B-9550-F79AB5245CC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC38070-C04E-4B08-83B7-B70E30F8F227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC38070-C04E-4B08-83B7-B70E30F8F227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC38070-C04E-4B08-83B7-B70E30F8F227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC38070-C04E-4B08-83B7-B70E30F8F227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C429C5F-CF84-4CAA-88B1-A70A53FB014C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C429C5F-CF84-4CAA-88B1-A70A53FB014C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C429C5F-CF84-4CAA-88B1-A70A53FB014C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C429C5F-CF84-4CAA-88B1-A70A53FB014C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D4AE9FD-C828-4822-AF2F-C7F0C8761C4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4AE9FD-C828-4822-AF2F-C7F0C8761C4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D4AE9FD-C828-4822-AF2F-C7F0C8761C4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D4AE9FD-C828-4822-AF2F-C7F0C8761C4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
