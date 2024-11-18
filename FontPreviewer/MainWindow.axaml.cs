@@ -2,7 +2,9 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using SkiaSharp;
+using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FontPreviewer
@@ -23,7 +25,7 @@ namespace FontPreviewer
         private Image _imageControl;
         private iHawkSkiaSharpCommonLibrary.Helpers.SkiaSharpHelper? _helper;
         private int _textSize = 200;
-        private const string DefaultText = "ÓÃÐÄÕÀ·ÅÎÄ×ÖÖ®ÃÀ Abc123";
+        private const string DefaultText = "ç”¨å¿ƒç»½æ”¾æ–‡å­—ä¹‹ç¾Ž\r\nAbc\r\n123";
         private Avalonia.Media.Imaging.Bitmap? _cachedBitmap;
         #endregion
 
@@ -37,11 +39,13 @@ namespace FontPreviewer
                 YMinMaxVisible = YMinMaxVisibleCheckBox.IsChecked ?? false,
                 HheaAscDescVisible = HheaAscDescVisibleCheckBox.IsChecked ?? false,
                 TypoAscDescVisible = TypoAscDescVisibleCheckBox.IsChecked ?? false,
-                WinAscDescVisible = WinAscDescVisibleCheckBox.IsChecked ?? false
+                WinAscDescVisible = WinAscDescVisibleCheckBox.IsChecked ?? false,
+                LineGapTag = LineGapTagListBox.SelectedIndex == 0 ? "YMinMax" : "AscDesc"
             };
 
             var text = InputTextBox.Text ?? DefaultText;
-            var img = await Task.Run(() => _helper.DrawTextToImage(text, (int)GlyphPreviewCanvas.Bounds.Width, (int)GlyphPreviewCanvas.Bounds.Height, SKColors.White, SKColors.Black, _textSize, param));
+            var lines = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
+            var img = await Task.Run(() => _helper.DrawTextToImage(lines, (int)GlyphPreviewCanvas.Bounds.Width, (int)GlyphPreviewCanvas.Bounds.Height, SKColors.White, SKColors.Black, _textSize, param));
 
             using var data = img.Encode(SKEncodedImageFormat.Png, 100);
             using var stream = new MemoryStream();
@@ -59,6 +63,8 @@ namespace FontPreviewer
             var files = await iHawkAvaloniaCommonLibrary.CommonHelper.OpenFontFileAsync(this);
             if (!(files?.Count > 0)) return;
 
+            OpennedFileName.Text = files[0].Path.LocalPath;
+
             _helper = new iHawkSkiaSharpCommonLibrary.Helpers.SkiaSharpHelper(files[0].Path.LocalPath);
             var s = _helper.GetTypeSetting();
             InfoBlock.Text = s;
@@ -71,6 +77,11 @@ namespace FontPreviewer
             await DrawCanvasAsync();
         }
 
+        private async void ListBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            await DrawCanvasAsync();
+        }
+
         private async void GlyphPreviewCanvas_SizeChanged(object? sender, SizeChangedEventArgs e)
         {
             await DrawCanvasAsync();
@@ -78,8 +89,8 @@ namespace FontPreviewer
 
         private async void GlyphPreviewCanvas_PointerWheelChanged(object? sender, PointerWheelEventArgs e)
         {
-            _textSize += (int)e.Delta.Y * 10; // µ÷ÕûÎÄ±¾´óÐ¡µÄÔöÁ¿
-            if (_textSize < 10) _textSize = 10; // È·±£ÎÄ±¾´óÐ¡²»Ð¡ÓÚ10
+            _textSize += (int)e.Delta.Y * 10; // è°ƒæ•´æ–‡æœ¬å¤§å°çš„å¢žé‡
+            if (_textSize < 10) _textSize = 10; // ç¡®ä¿æ–‡æœ¬å¤§å°ä¸å°äºŽ10
             await DrawCanvasAsync();
         }
 

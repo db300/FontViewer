@@ -14,8 +14,12 @@
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
-    <Button Grid.Row="0" Content="打开" Click="OpenCommandClick"/>
-    <TextBox Grid.Row="1" HorizontalAlignment="Stretch" x:Name="InputTextBox" KeyDown="InputTextBox_KeyDown"/>
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <Button Content="打开" Click="OpenCommandClick"/>
+      <TextBlock VerticalAlignment="Center" x:Name="OpennedFileName"/>
+    </StackPanel>
+    
+    <TextBox Grid.Row="1" HorizontalAlignment="Stretch" x:Name="InputTextBox" KeyDown="InputTextBox_KeyDown" AcceptsReturn="True"/>
 
     <Grid Grid.Row="2">
       <Grid.ColumnDefinitions>
@@ -25,10 +29,22 @@
 
       <Canvas Grid.Column="0" x:Name="GlyphPreviewCanvas" SizeChanged="GlyphPreviewCanvas_SizeChanged" PointerWheelChanged="GlyphPreviewCanvas_PointerWheelChanged"/>
       <StackPanel Grid.Column="1" Orientation="Vertical" Background="AliceBlue">
-        <CheckBox Content="yMin / yMax" Foreground="Black" x:Name="YMinMaxVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
-        <CheckBox Content="hhea ascender / descender" Foreground="Red" x:Name="HheaAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
-        <CheckBox Content="typo ascender / descender" Foreground="Lime" x:Name="TypoAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
-        <CheckBox Content="win ascender / descender" Foreground="Blue" x:Name="WinAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
+        <Expander Header="参考线" HorizontalAlignment="Stretch" IsExpanded="True">
+          <StackPanel Orientation="Vertical">
+            <CheckBox Content="yMin / yMax" Foreground="Black" x:Name="YMinMaxVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
+            <CheckBox Content="hhea ascender / descender" Foreground="Red" x:Name="HheaAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
+            <CheckBox Content="typo ascender / descender" Foreground="Lime" x:Name="TypoAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
+            <CheckBox Content="win ascender / descender" Foreground="Blue" x:Name="WinAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
+          </StackPanel>
+        </Expander>
+        <Expander Header="行间距" HorizontalAlignment="Stretch" IsExpanded="True">
+          <StackPanel Orientation="Vertical">
+            <ListBox x:Name="LineGapTagListBox" SelectionChanged="ListBox_SelectionChanged">
+              <ListBoxItem Content="基于 yMin / yMax" IsSelected="True"/>
+              <ListBoxItem Content="基于 ascender / descender"/>
+            </ListBox>
+          </StackPanel>
+        </Expander>
       </StackPanel>
       
     </Grid>
