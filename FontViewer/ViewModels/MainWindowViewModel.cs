@@ -10,15 +10,8 @@ namespace FontViewer.ViewModels
     {
         public MainWindowViewModel()
         {
-            _someTextProperty = string.Empty; // Initialize _someTextProperty to a non-null value
+            //_someTextProperty = string.Empty; // Initialize _someTextProperty to a non-null value
             OpenCommandClick = ReactiveCommand.Create(OnOpenCommandClick);
-        }
-
-        private string _someTextProperty;
-        public string SomeTextProperty
-        {
-            get => _someTextProperty;
-            set => this.RaiseAndSetIfChanged(ref _someTextProperty, value);
         }
 
         public ReactiveCommand<Unit, Unit> OpenCommandClick { get; }
@@ -36,7 +29,7 @@ namespace FontViewer.ViewModels
                 fontNames.Add(fontName);
             }
 
-            SomeTextProperty = string.Join("\n", fontNames);
+            //SomeTextProperty = string.Join("\n", fontNames);
         }
     }
 }
