@@ -49,6 +49,6 @@
       
     </Grid>
     
-    <TextBlock Grid.Row="3" Height="200" x:Name="InfoBlock" Background="AliceBlue"/>
+    <TextBlock Grid.Row="3" Height="250" x:Name="InfoBlock" Background="AliceBlue" Padding="10"/>
   </Grid>
 </Window>

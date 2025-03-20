@@ -5,6 +5,7 @@ using SkiaSharp;
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace FontPreviewer
@@ -18,6 +19,11 @@ namespace FontPreviewer
 
             _imageControl = new Image();
             GlyphPreviewCanvas.Children.Add(_imageControl);
+
+            // 获取程序集版本号
+            var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.0.0";
+            // 设置窗口标题
+            Title = $"FontPreviewer - {version}";
         }
         #endregion
 
