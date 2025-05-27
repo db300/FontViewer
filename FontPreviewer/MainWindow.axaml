@@ -11,7 +11,7 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
-      <RowDefinition Height="Auto"/>
+      <!--<RowDefinition Height="Auto"/>-->
     </Grid.RowDefinitions>
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
@@ -19,7 +19,7 @@
       <TextBlock VerticalAlignment="Center" x:Name="OpennedFileName"/>
     </StackPanel>
     
-    <TextBox Grid.Row="1" HorizontalAlignment="Stretch" x:Name="InputTextBox" KeyDown="InputTextBox_KeyDown" AcceptsReturn="True"/>
+    <TextBox Grid.Row="1" HorizontalAlignment="Stretch" x:Name="InputTextBox" KeyDown="InputTextBox_KeyDown" AcceptsReturn="True" Watermark="请输入要预览的文字"/>
 
     <Grid Grid.Row="2">
       <Grid.ColumnDefinitions>
@@ -45,10 +45,33 @@
             </ListBox>
           </StackPanel>
         </Expander>
+        <Expander Header="排版参数" HorizontalAlignment="Stretch" IsExpanded="True">
+          <TextBlock x:Name="TypeParamBlock" Height="250" Padding="10"/>
+        </Expander>
       </StackPanel>
       
+      <!-- 浮动在左下角的Slider和显示值 -->
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Bottom"
+                  Margin="10">
+        <Slider x:Name="FontSizeSlider"
+                Minimum="10"
+                Maximum="500"
+                Value="200"
+                Width="300"
+                TickFrequency="1"
+                ValueChanged="FontSizeSlider_ValueChanged"/>
+        <TextBlock Text="{Binding Value, ElementName=FontSizeSlider, StringFormat='{}{0:F0}'}"
+                   Margin="8,0,0,0"
+                   VerticalAlignment="Center"
+                   Foreground="Black"
+                   FontWeight="Bold"
+                   FontSize="16"/>
+      </StackPanel>
+
     </Grid>
     
-    <TextBlock Grid.Row="3" Height="250" x:Name="InfoBlock" Background="AliceBlue" Padding="10"/>
+    <!--<TextBlock Grid.Row="3" Height="250" x:Name="InfoBlock" Background="AliceBlue" Padding="10"/>-->
   </Grid>
 </Window>

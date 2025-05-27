@@ -73,7 +73,8 @@ namespace FontPreviewer
 
             _helper = new iHawkSkiaSharpCommonLibrary.Helpers.SkiaSharpHelper(files[0].Path.LocalPath);
             var s = _helper.GetTypeSetting();
-            InfoBlock.Text = s;
+            //InfoBlock.Text = s;
+            TypeParamBlock.Text = s;
 
             await DrawCanvasAsync();
         }
@@ -106,6 +107,17 @@ namespace FontPreviewer
             {
                 await DrawCanvasAsync();
             }
+        }
+
+        private async void FontSizeSlider_ValueChanged(object? sender, Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            var newSize = (int)e.NewValue;
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine($"调整后的字号：{newSize}");
+#endif
+            if (_textSize == newSize) return;
+            _textSize = newSize;
+            await DrawCanvasAsync();
         }
         #endregion
     }
