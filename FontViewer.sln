@@ -5,13 +5,13 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FontViewer", "FontViewer\FontViewer.csproj", "{501D3FDB-CF36-4374-8A4C-660E7EFE5640}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnicodeQueryTool", "UnicodeQueryTool\UnicodeQueryTool.csproj", "{F9619476-06C3-400B-9550-F79AB5245CC8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FontPreviewer", "FontPreviewer\FontPreviewer.csproj", "{BFC38070-C04E-4B08-83B7-B70E30F8F227}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHawkAvaloniaCommonLibrary", "..\iHawkAvaloniaLibrary\iHawkAvaloniaCommonLibrary\iHawkAvaloniaCommonLibrary.csproj", "{7C429C5F-CF84-4CAA-88B1-A70A53FB014C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHawkSkiaSharpCommonLibrary", "..\iHawkAvaloniaLibrary\iHawkSkiaSharpCommonLibrary\iHawkSkiaSharpCommonLibrary.csproj", "{7D4AE9FD-C828-4822-AF2F-C7F0C8761C4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{226D3F3C-CC92-4646-8E27-0AF872DD4BFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{501D3FDB-CF36-4374-8A4C-660E7EFE5640}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{501D3FDB-CF36-4374-8A4C-660E7EFE5640}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{501D3FDB-CF36-4374-8A4C-660E7EFE5640}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F9619476-06C3-400B-9550-F79AB5245CC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9619476-06C3-400B-9550-F79AB5245CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9619476-06C3-400B-9550-F79AB5245CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9619476-06C3-400B-9550-F79AB5245CC8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BFC38070-C04E-4B08-83B7-B70E30F8F227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BFC38070-C04E-4B08-83B7-B70E30F8F227}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFC38070-C04E-4B08-83B7-B70E30F8F227}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{7D4AE9FD-C828-4822-AF2F-C7F0C8761C4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D4AE9FD-C828-4822-AF2F-C7F0C8761C4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D4AE9FD-C828-4822-AF2F-C7F0C8761C4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{226D3F3C-CC92-4646-8E27-0AF872DD4BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{226D3F3C-CC92-4646-8E27-0AF872DD4BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{226D3F3C-CC92-4646-8E27-0AF872DD4BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{226D3F3C-CC92-4646-8E27-0AF872DD4BFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
