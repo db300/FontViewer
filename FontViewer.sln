@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHawkSkiaSharpCommonLibrary
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{226D3F3C-CC92-4646-8E27-0AF872DD4BFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FontViewerX", "FontViewerX\FontViewerX.csproj", "{01E96B57-0BDC-43BE-B7AC-F4A6BC978846}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{226D3F3C-CC92-4646-8E27-0AF872DD4BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{226D3F3C-CC92-4646-8E27-0AF872DD4BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{226D3F3C-CC92-4646-8E27-0AF872DD4BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01E96B57-0BDC-43BE-B7AC-F4A6BC978846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01E96B57-0BDC-43BE-B7AC-F4A6BC978846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E96B57-0BDC-43BE-B7AC-F4A6BC978846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01E96B57-0BDC-43BE-B7AC-F4A6BC978846}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
