@@ -40,6 +40,10 @@ namespace FontPreviewer
         {
             if (_helper is null) return;
 
+            var width = (int)GlyphPreviewCanvas.Bounds.Width;
+            var height = (int)GlyphPreviewCanvas.Bounds.Height;
+            if (width <= 0 || height <= 0) return;
+
             var param = new iHawkSkiaSharpCommonLibrary.Entities.GlyphPreviewParam
             {
                 YMinMaxVisible = YMinMaxVisibleCheckBox.IsChecked ?? false,
@@ -49,17 +53,29 @@ namespace FontPreviewer
                 LineGapTag = LineGapTagListBox.SelectedIndex == 0 ? "YMinMax" : "AscDesc"
             };
 
-            var text = InputTextBox.Text ?? DefaultText;
+            var text = string.IsNullOrWhiteSpace(InputTextBox.Text) ? DefaultText : InputTextBox.Text;
             var lines = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
-            var img = await Task.Run(() => _helper.DrawTextToImage(lines, (int)GlyphPreviewCanvas.Bounds.Width, (int)GlyphPreviewCanvas.Bounds.Height, SKColors.White, SKColors.Black, _textSize, param));
+            using var img = await Task.Run(() => _helper.DrawTextToImage(lines, width, height, SKColors.White, SKColors.Black, _textSize, param));
 
             using var data = img.Encode(SKEncodedImageFormat.Png, 100);
+            if (data is null) return;
+
             using var stream = new MemoryStream();
-            data?.SaveTo(stream);
+            data.SaveTo(stream);
             stream.Seek(0, SeekOrigin.Begin);
 
             var bitmap = new Avalonia.Media.Imaging.Bitmap(stream);
+            var oldBitmap = _cachedBitmap;
+            _cachedBitmap = bitmap;
             _imageControl.Source = bitmap;
+            oldBitmap?.Dispose();
+        }
+
+        private void ClearCurrentBitmap()
+        {
+            _imageControl.Source = null;
+            _cachedBitmap?.Dispose();
+            _cachedBitmap = null;
         }
         #endregion
 
@@ -69,14 +85,25 @@ namespace FontPreviewer
             var files = await iHawkAvaloniaCommonLibrary.CommonHelper.OpenFontFileAsync(this);
             if (!(files?.Count > 0)) return;
 
-            OpennedFileName.Text = files[0].Path.LocalPath;
+            try
+            {
+                var filePath = files[0].Path.LocalPath;
+                var helper = new iHawkSkiaSharpCommonLibrary.Helpers.SkiaSharpHelper(filePath);
+                var s = helper.GetTypeSetting();
 
-            _helper = new iHawkSkiaSharpCommonLibrary.Helpers.SkiaSharpHelper(files[0].Path.LocalPath);
-            var s = _helper.GetTypeSetting();
-            //InfoBlock.Text = s;
-            TypeParamBlock.Text = s;
+                _helper = helper;
+                OpennedFileName.Text = filePath;
+                TypeParamBlock.Text = s;
 
-            await DrawCanvasAsync();
+                await DrawCanvasAsync();
+            }
+            catch (Exception ex)
+            {
+                _helper = null;
+                ClearCurrentBitmap();
+                OpennedFileName.Text = string.Empty;
+                TypeParamBlock.Text = $"打开字体失败：{ex.Message}";
+            }
         }
 
         private async void CheckBoxChanged(object? sender, RoutedEventArgs e)
@@ -118,6 +145,13 @@ namespace FontPreviewer
             if (_textSize == newSize) return;
             _textSize = newSize;
             await DrawCanvasAsync();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            ClearCurrentBitmap();
+            _helper = null;
+            base.OnClosed(e);
         }
         #endregion
     }
