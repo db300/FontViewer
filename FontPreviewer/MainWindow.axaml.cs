@@ -1,11 +1,15 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using SkiaSharp;
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FontPreviewer
@@ -28,15 +32,20 @@ namespace FontPreviewer
         #endregion
 
         #region property
+        private const int DefaultRenderDelayMilliseconds = 100;
+        private const int ResizeRenderDelayMilliseconds = 150;
+        private const int ImmediateRenderDelayMilliseconds = 0;
+
         private Image _imageControl;
         private iHawkSkiaSharpCommonLibrary.Helpers.SkiaSharpHelper? _helper;
         private int _textSize = 200;
         private const string DefaultText = "用心绽放文字之美\r\nAbc\r\n123";
-        private Avalonia.Media.Imaging.Bitmap? _cachedBitmap;
+        private Bitmap? _cachedBitmap;
+        private CancellationTokenSource? _renderCancellationTokenSource;
         #endregion
 
         #region method
-        private async Task DrawCanvasAsync()
+        private async Task DrawCanvasAsync(CancellationToken cancellationToken = default)
         {
             if (_helper is null) return;
 
@@ -55,20 +64,77 @@ namespace FontPreviewer
 
             var text = string.IsNullOrWhiteSpace(InputTextBox.Text) ? DefaultText : InputTextBox.Text;
             var lines = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
-            using var img = await Task.Run(() => _helper.DrawTextToImage(lines, width, height, SKColors.White, SKColors.Black, _textSize, param));
 
-            using var data = img.Encode(SKEncodedImageFormat.Png, 100);
-            if (data is null) return;
+            using var img = await Task.Run(() => _helper.DrawTextToImage(lines, width, height, SKColors.White, SKColors.Black, _textSize, param), cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
 
-            using var stream = new MemoryStream();
-            data.SaveTo(stream);
-            stream.Seek(0, SeekOrigin.Begin);
-
-            var bitmap = new Avalonia.Media.Imaging.Bitmap(stream);
+            var bitmap = CreateBitmap(img);
             var oldBitmap = _cachedBitmap;
             _cachedBitmap = bitmap;
             _imageControl.Source = bitmap;
             oldBitmap?.Dispose();
+        }
+
+        private static WriteableBitmap CreateBitmap(SKBitmap img)
+        {
+            var bitmap = new WriteableBitmap(
+                new PixelSize(img.Width, img.Height),
+                new Vector(96, 96),
+                PixelFormat.Bgra8888,
+                AlphaFormat.Premul);
+
+            using var framebuffer = bitmap.Lock();
+            var bytes = img.Bytes;
+            if (framebuffer.RowBytes == img.RowBytes)
+            {
+                Marshal.Copy(bytes, 0, framebuffer.Address, bytes.Length);
+                return bitmap;
+            }
+
+            for (var row = 0; row < img.Height; row++)
+            {
+                Marshal.Copy(
+                    bytes,
+                    row * img.RowBytes,
+                    IntPtr.Add(framebuffer.Address, row * framebuffer.RowBytes),
+                    img.RowBytes);
+            }
+
+            return bitmap;
+        }
+
+        private void RequestRender(int delayMilliseconds = DefaultRenderDelayMilliseconds)
+        {
+            CancelPendingRender();
+            _renderCancellationTokenSource = new CancellationTokenSource();
+            _ = ScheduleRenderAsync(delayMilliseconds, _renderCancellationTokenSource.Token);
+        }
+
+        private async Task ScheduleRenderAsync(int delayMilliseconds, CancellationToken cancellationToken)
+        {
+            try
+            {
+                if (delayMilliseconds > 0)
+                {
+                    await Task.Delay(delayMilliseconds, cancellationToken);
+                }
+
+                await DrawCanvasAsync(cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+            }
+            catch (Exception ex)
+            {
+                TypeParamBlock.Text = $"预览失败：{ex.Message}";
+            }
+        }
+
+        private void CancelPendingRender()
+        {
+            _renderCancellationTokenSource?.Cancel();
+            _renderCancellationTokenSource?.Dispose();
+            _renderCancellationTokenSource = null;
         }
 
         private void ClearCurrentBitmap()
@@ -95,48 +161,50 @@ namespace FontPreviewer
                 OpennedFileName.Text = filePath;
                 TypeParamBlock.Text = s;
 
-                await DrawCanvasAsync();
+                RequestRender(ImmediateRenderDelayMilliseconds);
             }
             catch (Exception ex)
             {
                 _helper = null;
+                CancelPendingRender();
                 ClearCurrentBitmap();
                 OpennedFileName.Text = string.Empty;
                 TypeParamBlock.Text = $"打开字体失败：{ex.Message}";
             }
         }
 
-        private async void CheckBoxChanged(object? sender, RoutedEventArgs e)
+        private void CheckBoxChanged(object? sender, RoutedEventArgs e)
         {
-            await DrawCanvasAsync();
+            RequestRender(ImmediateRenderDelayMilliseconds);
         }
 
-        private async void ListBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+        private void ListBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
-            await DrawCanvasAsync();
+            RequestRender(ImmediateRenderDelayMilliseconds);
         }
 
-        private async void GlyphPreviewCanvas_SizeChanged(object? sender, SizeChangedEventArgs e)
+        private void GlyphPreviewCanvas_SizeChanged(object? sender, SizeChangedEventArgs e)
         {
-            await DrawCanvasAsync();
+            RequestRender(ResizeRenderDelayMilliseconds);
         }
 
-        private async void GlyphPreviewCanvas_PointerWheelChanged(object? sender, PointerWheelEventArgs e)
+        private void GlyphPreviewCanvas_PointerWheelChanged(object? sender, PointerWheelEventArgs e)
         {
             _textSize += (int)e.Delta.Y * 10; // 调整文本大小的增量
             if (_textSize < 10) _textSize = 10; // 确保文本大小不小于10
-            await DrawCanvasAsync();
+            FontSizeSlider.Value = _textSize;
+            RequestRender(DefaultRenderDelayMilliseconds);
         }
 
-        private async void InputTextBox_KeyDown(object? sender, KeyEventArgs e)
+        private void InputTextBox_KeyDown(object? sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                await DrawCanvasAsync();
+                RequestRender(ImmediateRenderDelayMilliseconds);
             }
         }
 
-        private async void FontSizeSlider_ValueChanged(object? sender, Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        private void FontSizeSlider_ValueChanged(object? sender, Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             var newSize = (int)e.NewValue;
 #if DEBUG
@@ -144,11 +212,12 @@ namespace FontPreviewer
 #endif
             if (_textSize == newSize) return;
             _textSize = newSize;
-            await DrawCanvasAsync();
+            RequestRender(DefaultRenderDelayMilliseconds);
         }
 
         protected override void OnClosed(EventArgs e)
         {
+            CancelPendingRender();
             ClearCurrentBitmap();
             _helper = null;
             base.OnClosed(e);
