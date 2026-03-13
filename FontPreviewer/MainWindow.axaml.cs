@@ -20,9 +20,7 @@ namespace FontPreviewer
         public MainWindow()
         {
             InitializeComponent();
-
-            _imageControl = new Image();
-            GlyphPreviewCanvas.Children.Add(_imageControl);
+            _glyphPreviewImage = this.FindControl<Image>("GlyphPreviewImage")!;
 
             // 获取程序集版本号
             var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.0.0";
@@ -36,7 +34,7 @@ namespace FontPreviewer
         private const int ResizeRenderDelayMilliseconds = 150;
         private const int ImmediateRenderDelayMilliseconds = 0;
 
-        private Image _imageControl;
+        private readonly Image _glyphPreviewImage;
         private iHawkSkiaSharpCommonLibrary.Helpers.SkiaSharpHelper? _helper;
         private int _textSize = 200;
         private const string DefaultText = "用心绽放文字之美\r\nAbc\r\n123";
@@ -53,17 +51,8 @@ namespace FontPreviewer
             var height = (int)GlyphPreviewCanvas.Bounds.Height;
             if (width <= 0 || height <= 0) return;
 
-            var param = new iHawkSkiaSharpCommonLibrary.Entities.GlyphPreviewParam
-            {
-                YMinMaxVisible = YMinMaxVisibleCheckBox.IsChecked ?? false,
-                HheaAscDescVisible = HheaAscDescVisibleCheckBox.IsChecked ?? false,
-                TypoAscDescVisible = TypoAscDescVisibleCheckBox.IsChecked ?? false,
-                WinAscDescVisible = WinAscDescVisibleCheckBox.IsChecked ?? false,
-                LineGapTag = LineGapTagListBox.SelectedIndex == 0 ? "YMinMax" : "AscDesc"
-            };
-
-            var text = string.IsNullOrWhiteSpace(InputTextBox.Text) ? DefaultText : InputTextBox.Text;
-            var lines = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
+            var lines = GetPreviewLines();
+            var param = CreatePreviewParam();
 
             using var img = await Task.Run(() => _helper.DrawTextToImage(lines, width, height, SKColors.White, SKColors.Black, _textSize, param), cancellationToken);
             cancellationToken.ThrowIfCancellationRequested();
@@ -71,8 +60,26 @@ namespace FontPreviewer
             var bitmap = CreateBitmap(img);
             var oldBitmap = _cachedBitmap;
             _cachedBitmap = bitmap;
-            _imageControl.Source = bitmap;
+            _glyphPreviewImage.Source = bitmap;
             oldBitmap?.Dispose();
+        }
+
+        private iHawkSkiaSharpCommonLibrary.Entities.GlyphPreviewParam CreatePreviewParam()
+        {
+            return new iHawkSkiaSharpCommonLibrary.Entities.GlyphPreviewParam
+            {
+                YMinMaxVisible = YMinMaxVisibleCheckBox.IsChecked ?? false,
+                HheaAscDescVisible = HheaAscDescVisibleCheckBox.IsChecked ?? false,
+                TypoAscDescVisible = TypoAscDescVisibleCheckBox.IsChecked ?? false,
+                WinAscDescVisible = WinAscDescVisibleCheckBox.IsChecked ?? false,
+                LineGapTag = LineGapTagListBox.SelectedIndex == 0 ? "YMinMax" : "AscDesc"
+            };
+        }
+
+        private System.Collections.Generic.List<string> GetPreviewLines()
+        {
+            var text = string.IsNullOrWhiteSpace(InputTextBox.Text) ? DefaultText : InputTextBox.Text;
+            return text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
         }
 
         private static WriteableBitmap CreateBitmap(SKBitmap img)
@@ -139,7 +146,7 @@ namespace FontPreviewer
 
         private void ClearCurrentBitmap()
         {
-            _imageControl.Source = null;
+            _glyphPreviewImage.Source = null;
             _cachedBitmap?.Dispose();
             _cachedBitmap = null;
         }
@@ -196,12 +203,9 @@ namespace FontPreviewer
             RequestRender(DefaultRenderDelayMilliseconds);
         }
 
-        private void InputTextBox_KeyDown(object? sender, KeyEventArgs e)
+        private void InputTextBox_TextChanged(object? sender, TextChangedEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                RequestRender(ImmediateRenderDelayMilliseconds);
-            }
+            RequestRender(DefaultRenderDelayMilliseconds);
         }
 
         private void FontSizeSlider_ValueChanged(object? sender, Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs e)
