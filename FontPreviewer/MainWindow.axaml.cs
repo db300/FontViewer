@@ -150,6 +150,12 @@ namespace FontPreviewer
             _cachedBitmap?.Dispose();
             _cachedBitmap = null;
         }
+
+        private void DisposeHelper()
+        {
+            _helper?.Dispose();
+            _helper = null;
+        }
         #endregion
 
         #region event handler
@@ -158,13 +164,18 @@ namespace FontPreviewer
             var files = await iHawkAvaloniaCommonLibrary.CommonHelper.OpenFontFileAsync(this);
             if (!(files?.Count > 0)) return;
 
+            iHawkSkiaSharpCommonLibrary.Helpers.SkiaSharpHelper? helper = null;
             try
             {
                 var filePath = files[0].Path.LocalPath;
-                var helper = new iHawkSkiaSharpCommonLibrary.Helpers.SkiaSharpHelper(filePath);
+                helper = new iHawkSkiaSharpCommonLibrary.Helpers.SkiaSharpHelper(filePath);
                 var s = helper.GetTypeSetting();
 
+                CancelPendingRender();
+                DisposeHelper();
                 _helper = helper;
+                helper = null;
+
                 OpennedFileName.Text = filePath;
                 TypeParamBlock.Text = s;
 
@@ -172,7 +183,8 @@ namespace FontPreviewer
             }
             catch (Exception ex)
             {
-                _helper = null;
+                helper?.Dispose();
+                DisposeHelper();
                 CancelPendingRender();
                 ClearCurrentBitmap();
                 OpennedFileName.Text = string.Empty;
@@ -223,7 +235,7 @@ namespace FontPreviewer
         {
             CancelPendingRender();
             ClearCurrentBitmap();
-            _helper = null;
+            DisposeHelper();
             base.OnClosed(e);
         }
         #endregion

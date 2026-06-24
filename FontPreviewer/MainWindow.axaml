@@ -33,10 +33,10 @@
       <StackPanel Grid.Column="1" Orientation="Vertical" Background="AliceBlue">
         <Expander Header="参考线" HorizontalAlignment="Stretch" IsExpanded="True">
           <StackPanel Orientation="Vertical">
-            <CheckBox Content="yMin / yMax" Foreground="Black" x:Name="YMinMaxVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
-            <CheckBox Content="hhea ascender / descender" Foreground="Red" x:Name="HheaAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
-            <CheckBox Content="typo ascender / descender" Foreground="Lime" x:Name="TypoAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
-            <CheckBox Content="win ascender / descender" Foreground="Blue" x:Name="WinAscDescVisibleCheckBox" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
+            <CheckBox Content="yMin / yMax" Foreground="Black" x:Name="YMinMaxVisibleCheckBox" IsCheckedChanged="CheckBoxChanged"/>
+            <CheckBox Content="hhea ascender / descender" Foreground="Red" x:Name="HheaAscDescVisibleCheckBox" IsCheckedChanged="CheckBoxChanged"/>
+            <CheckBox Content="typo ascender / descender" Foreground="Lime" x:Name="TypoAscDescVisibleCheckBox" IsCheckedChanged="CheckBoxChanged"/>
+            <CheckBox Content="win ascender / descender" Foreground="Blue" x:Name="WinAscDescVisibleCheckBox" IsCheckedChanged="CheckBoxChanged"/>
           </StackPanel>
         </Expander>
         <Expander Header="行间距" HorizontalAlignment="Stretch" IsExpanded="True">
